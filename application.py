@@ -3,10 +3,11 @@
 Created on Sat Dec 16 20:47:18 2017
 @author: gf_admin
 """
-from flask import Flask, request, render_template, g, jsonify
+import datetime
 import sqlite3
-import datetime, time
 from uuid import uuid4
+
+from flask import Flask, request, g, jsonify
 
 app = Flask(__name__)
 
@@ -46,6 +47,7 @@ def close_connection(exception):
 @app.route("/")  # take note of this decorator syntax, it's a common pattern
 def home():
     return "API is up and running..."
+
 
 @app.route('/update_case', methods=['GET', 'POST'])
 def raise_case():
@@ -89,13 +91,14 @@ def init_db():
     update_db(sql_create_table)
     return "DB created!"
 
+
 if __name__ == '__main__':
     DATABASE = "./db/demo.db"
-
 
     # Generate a globally unique address for this node
     node_identifier = str(uuid4()).replace('-', '')
 
+    print(node_identifier)
     from argparse import ArgumentParser
 
     parser = ArgumentParser()
